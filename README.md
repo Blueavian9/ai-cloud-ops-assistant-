@@ -60,6 +60,6 @@ Coming soon.
 
 ## 🙋‍♂️ Creator
 
-**Dr. Kaizer**  
+Cesar Aguilar 
 Full-Stack Software Engineer | Cloud Enthusiast | AI Integration Architect  
-Connect on [LinkedIn](#) | [Portfolio](#) | [Email](mailto:blueavian9@gmail.com)
+Connect on [LinkedIn](https://www.linkedin.com/in/cesar-aguilar-blueavian9/) | [Portfolio](https://react-tailwind-portfolio-murex.vercel.app/) | [Email](mailto:blueavian9@gmail.com)
