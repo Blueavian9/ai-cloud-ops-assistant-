@@ -1,0 +1,7 @@
+// server.js or index.js
+require('dotenv').config();
+
+const openaiKey = process.env.OPENAI_API_KEY;
+const groqKey = process.env.GROQ_API_KEY;
+
+console.log("OPENAI_API_KEY loaded:", !!openaiKey); // should log true, not the key itself
