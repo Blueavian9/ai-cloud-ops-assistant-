@@ -1,25 +1,32 @@
 from typing import List
 from pathlib import Path
-from langchain_community.embeddings import OpenAIEmbeddings
-from langchain_community.vectorstores import FAISS
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.vectorstores import FAISS
 from langchain.schema import Document
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 class VectorStore:
     def __init__(self, openai_api_key: str):
         """Initialize the vector store with OpenAI embeddings."""
-        self.embeddings = OpenAIEmbeddings(
-            openai_api_key=openai_api_key,
-            model="text-embedding-ada-002"
-        )
+        self.embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
         self.vector_store = None
+        self.text_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=1000,
+            chunk_overlap=200,
+            length_function=len,
+        )
 
     def create_vector_store(self, documents: List[Document]) -> None:
         """Create a FAISS vector store from documents."""
         if not documents:
             raise ValueError("No documents provided to create vector store")
         
-        self.vector_store = FAISS.from_documents(documents, self.embeddings)
-        print(f"✅ Created vector store with {len(documents)} documents")
+        # Split documents into chunks
+        texts = self.text_splitter.split_documents(documents)
+        
+        # Create vector store
+        self.vector_store = FAISS.from_documents(texts, self.embeddings)
+        print(f"✅ Created vector store with {len(texts)} documents")
 
     def save_vector_store(self, directory: str) -> None:
         """Save the vector store to disk."""

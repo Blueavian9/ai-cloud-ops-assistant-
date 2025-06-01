@@ -1,65 +1,117 @@
-# ai-cloud-ops-assistant-
-A Streamlit or web app that answers DevOps &amp; cloud troubleshooting questions using Retrieval-Augmented Generation (RAG) + Python.
+# AI Cloud Ops Assistant
 
+A modern web application that helps cloud engineers get instant, reliable, and sourced answers about AWS operations using RAG (Retrieval-Augmented Generation).
 
-# 🚀 AI CloudOps Assistant – Your AI-Powered DevOps Companion
+## Features
 
-**ai-cloud-ops-assistant** is a cutting-edge Retrieval-Augmented Generation (RAG) application designed to act as a DevOps engineer’s smart assistant. Built for cloud professionals, this tool leverages AI to read, understand, and answer questions about AWS & cloud operations from real documentation — fast and accurately.
+- 🤖 AI-powered Q&A about AWS services and best practices
+- 📚 Real-time search through AWS documentation
+- 💡 Detailed answers with source citations
+- 🌙 Dark/Light mode support
+- 📱 Responsive design
+- 🔍 Topic-based navigation
+- 💾 Save and share answers
+- ⚡ Fast and modern UI
 
-### 🌐 Use Case
-Say goodbye to CTRL+F and outdated documentation searches. Whether you’re debugging an EC2 instance, setting up IAM roles, or configuring VPCs — just ask your question and get real, contextual answers pulled straight from your docs.
+## Tech Stack
 
----
+### Frontend
+- Vite + React + TypeScript
+- Tailwind CSS for styling
+- ShadCN UI components
+- React Query for data fetching
+- React Router for navigation
 
-## 🧠 How It Works
+### Backend
+- Node.js + Express
+- OpenAI API for LLM
+- Supabase PGVector for vector storage
+- LangChain for RAG implementation
 
-This app uses **RAG** architecture (Retrieval-Augmented Generation):
+## Getting Started
 
-1. Upload cloud documents (PDF, Markdown, etc.)
-2. The app indexes them using **FAISS** vector search.
-3. Ask your cloud ops question in natural language.
-4. The AI retrieves relevant docs and generates a clear, contextual response.
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+- OpenAI API key
+- Supabase account
 
----
+### Installation
 
-## 🛠️ Tech Stack
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/ai-cloud-ops-assistant.git
+cd ai-cloud-ops-assistant
+```
 
-| Tool | Purpose |
-|------|---------|
-| 🐍 Python | Core programming language |
-| 🔗 LangChain | Connects documents to LLMs |
-| 🧠 OpenAI / Groq | LLM for natural language responses |
-| 📚 FAISS | Fast document indexing and retrieval |
-| 🌐 Streamlit | Build a clean, interactive frontend |
-| 📄 Markdown Viewer | Renders retrieved docs beautifully |
+2. Install dependencies:
+```bash
+npm install
+```
 
----
+3. Create a `.env` file:
+```env
+VITE_OPENAI_API_KEY=your_openai_api_key
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
 
-## ⚡ Features
+4. Start the development server:
+```bash
+npm run dev
+```
 
-- 🔍 Natural language Q&A for DevOps tasks
-- 📄 Upload & parse AWS/cloud PDFs
-- 📈 Real-time document retrieval via vector DB
-- 💬 Beautiful Streamlit interface
-- 🔐 API-key-based LLM integration
+## Project Structure
 
----
+```
+ai-cloud-ops-assistant/
+├── src/
+│   ├── components/     # React components
+│   ├── lib/           # Utility functions
+│   ├── hooks/         # Custom React hooks
+│   ├── types/         # TypeScript types
+│   └── App.tsx        # Main App component
+├── public/            # Static assets
+├── index.html         # Entry HTML file
+└── package.json       # Project dependencies
+```
 
-## 🧪 Status
+## Development Roadmap
 
-> 💡 MVP In Progress  
-Open for contributions, feedback, and cloud DevOps documentation suggestions.
+### Phase 1: MVP (2-3 weeks)
+- [x] Basic UI setup
+- [x] Chat interface
+- [x] RAG implementation
+- [x] Vector store integration
 
----
+### Phase 2: Core Features (2-4 weeks)
+- [ ] AWS docs crawler
+- [ ] User authentication
+- [ ] Saved answers
+- [ ] Topic browsing
 
-## 📁 Setup Instructions
+### Phase 3: Scale & Polish (1-2 months)
+- [ ] Live search
+- [ ] Feedback system
+- [ ] Analytics dashboard
+- [ ] Deployment
 
-Coming soon.
+## Contributing
 
----
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## 🙋‍♂️ Creator
+## License
 
-Cesar Aguilar 
-Full-Stack Software Engineer | Cloud Enthusiast | AI Integration Architect  
-Connect on [LinkedIn](https://www.linkedin.com/in/cesar-aguilar-blueavian9/) | [Portfolio](https://react-tailwind-portfolio-murex.vercel.app/) | [Email](mailto:blueavian9@gmail.com)
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- AWS Documentation
+- OpenAI
+- LangChain
+- Supabase
+- ShadCN UI
