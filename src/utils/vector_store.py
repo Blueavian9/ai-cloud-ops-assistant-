@@ -9,8 +9,7 @@ class VectorStore:
         """Initialize the vector store with OpenAI embeddings."""
         self.embeddings = OpenAIEmbeddings(
             openai_api_key=openai_api_key,
-            model="text-embedding-ada-002",
-            deployment="text-embedding-ada-002"
+            model="text-embedding-ada-002"
         )
         self.vector_store = None
 

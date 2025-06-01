@@ -6,15 +6,20 @@ from src.utils.vector_store import VectorStore
 from src.utils.qa_system import QASystem
 
 # Load environment variables
+print("Current working directory:", os.getcwd())
+print("Looking for .env file...")
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 print(f"API Key loaded: {'Yes' if OPENAI_API_KEY else 'No'}")
+if not OPENAI_API_KEY:
+    print("WARNING: OPENAI_API_KEY not found in environment variables")
 
 # UI Configuration
 st.set_page_config(
     page_title="Cloud Ops AI Assistant",
     page_icon="☁️",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
 # Custom CSS
@@ -31,6 +36,7 @@ st.markdown("""
         padding: 1.5rem;
         border-radius: 0.5rem;
         margin-top: 1rem;
+        border: 1px solid #e0e0e0;
     }
     .source-box {
         background-color: #ffffff;
@@ -38,6 +44,30 @@ st.markdown("""
         border-radius: 0.5rem;
         margin-top: 0.5rem;
         border: 1px solid #e0e0e0;
+    }
+    .stButton>button {
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 0.3rem;
+        font-size: 1rem;
+    }
+    .stButton>button:hover {
+        background-color: #45a049;
+    }
+    .copy-button {
+        background-color: #2196F3;
+        color: white;
+        padding: 0.3rem 0.6rem;
+        border: none;
+        border-radius: 0.3rem;
+        font-size: 0.9rem;
+        cursor: pointer;
+    }
+    .copy-button:hover {
+        background-color: #1976D2;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -57,6 +87,26 @@ def initialize_components():
     qa_system = QASystem(OPENAI_API_KEY, vector_store)
     
     return qa_system
+
+# Sidebar
+with st.sidebar:
+    st.title("☁️ Cloud Ops AI")
+    st.markdown("---")
+    st.markdown("### About")
+    st.markdown("""
+    This AI assistant helps you find answers to AWS and cloud operations questions using official documentation.
+    
+    **Features:**
+    - Search across AWS documentation
+    - Get detailed answers with sources
+    - Copy answers to clipboard
+    """)
+    st.markdown("---")
+    st.markdown("### Documentation")
+    st.markdown("Currently loaded:")
+    for file in os.listdir("data"):
+        if file.endswith(".pdf"):
+            st.markdown(f"- {file}")
 
 # Header
 st.title("☁️ AI Cloud Ops Assistant")
@@ -88,10 +138,13 @@ if query:
         try:
             result = qa_system.answer_question(query)
             
-            # Display answer
+            # Display answer with copy button
             st.markdown("### 💡 Answer")
-            st.markdown(f'<div class="answer-box">{result["answer"]}</div>', 
-                       unsafe_allow_html=True)
+            answer_container = st.container()
+            with answer_container:
+                st.markdown(f'<div class="answer-box">{result["answer"]}</div>', 
+                           unsafe_allow_html=True)
+                st.button("📋 Copy Answer", key="copy_answer")
             
             # Display sources
             if result["sources"]:
