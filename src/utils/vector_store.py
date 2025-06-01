@@ -1,7 +1,7 @@
 from typing import List
 from pathlib import Path
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.vectorstores import FAISS
+from langchain_community.embeddings import OpenAIEmbeddings
+from langchain_community.vectorstores import FAISS
 from langchain.schema import Document
 
 class VectorStore:

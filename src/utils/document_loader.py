@@ -1,6 +1,6 @@
 from typing import List
 from pathlib import Path
-from langchain.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader, UnstructuredPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.schema import Document
 
@@ -23,11 +23,20 @@ class DocumentLoader:
         # Load each PDF file
         for pdf_file in pdf_dir.glob("*.pdf"):
             try:
-                loader = PyPDFLoader(str(pdf_file))
-                docs.extend(loader.load())
-                print(f"✅ Loaded {pdf_file.name}")
+                # Try PyPDFLoader first
+                try:
+                    loader = PyPDFLoader(str(pdf_file))
+                    docs.extend(loader.load())
+                    print(f"✅ Loaded {pdf_file.name} using PyPDFLoader")
+                except Exception as e:
+                    # If PyPDFLoader fails, try UnstructuredPDFLoader
+                    print(f"PyPDFLoader failed for {pdf_file.name}, trying UnstructuredPDFLoader...")
+                    loader = UnstructuredPDFLoader(str(pdf_file))
+                    docs.extend(loader.load())
+                    print(f"✅ Loaded {pdf_file.name} using UnstructuredPDFLoader")
             except Exception as e:
                 print(f"❌ Error loading {pdf_file.name}: {str(e)}")
+                continue
         
         # Split documents into chunks
         if docs:
