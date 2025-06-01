@@ -30,7 +30,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS with cool features
+# Custom CSS with cool features and dark mode support
 st.markdown("""
     <style>
     /* Global styles */
@@ -40,16 +40,38 @@ st.markdown("""
         font-family: 'Inter', sans-serif;
     }
     
-    /* Main container with gradient background */
+    /* Theme variables */
+    :root {
+        --bg-gradient-light: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+        --bg-gradient-dark: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        --text-color-light: #333333;
+        --text-color-dark: #ffffff;
+        --container-bg-light: rgba(255, 255, 255, 0.9);
+        --container-bg-dark: rgba(45, 45, 45, 0.9);
+        --border-color-light: rgba(255, 255, 255, 0.2);
+        --border-color-dark: rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Main container with theme support */
     .main {
         padding: 2rem;
         max-width: 1200px;
         margin: 0 auto;
-        background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
         min-height: 100vh;
+        transition: all 0.3s ease;
     }
     
-    /* Animated header */
+    .main.light {
+        background: var(--bg-gradient-light);
+        color: var(--text-color-light);
+    }
+    
+    .main.dark {
+        background: var(--bg-gradient-dark);
+        color: var(--text-color-dark);
+    }
+    
+    /* Animated header with theme support */
     .header {
         background: linear-gradient(90deg, #4CAF50, #2196F3);
         -webkit-background-clip: text;
@@ -64,30 +86,47 @@ st.markdown("""
         100% { background-position: 0% 50%; }
     }
     
-    /* Search container with glassmorphism */
+    /* Enhanced search container with theme support */
     .search-container {
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(10px);
         padding: 2rem;
         border-radius: 1rem;
         box-shadow: 0 8px 32px rgba(0,0,0,0.1);
         margin-bottom: 2rem;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        transition: transform 0.3s ease;
+        transition: all 0.3s ease;
+    }
+    
+    .search-container.light {
+        background: var(--container-bg-light);
+        border: 1px solid var(--border-color-light);
+    }
+    
+    .search-container.dark {
+        background: var(--container-bg-dark);
+        border: 1px solid var(--border-color-dark);
     }
     
     .search-container:hover {
         transform: translateY(-2px);
     }
     
-    /* Enhanced input styling */
+    /* Enhanced input styling with theme support */
     .stTextInput>div>div>input {
         font-size: 1.2rem;
         padding: 1rem;
         border-radius: 0.5rem;
-        border: 2px solid #e0e0e0;
         transition: all 0.3s ease;
-        background: rgba(255, 255, 255, 0.9);
+    }
+    
+    .stTextInput>div>div>input.light {
+        background: var(--container-bg-light);
+        border: 2px solid #e0e0e0;
+        color: var(--text-color-light);
+    }
+    
+    .stTextInput>div>div>input.dark {
+        background: var(--container-bg-dark);
+        border: 2px solid #404040;
+        color: var(--text-color-dark);
     }
     
     .stTextInput>div>div>input:focus {
@@ -96,16 +135,24 @@ st.markdown("""
         transform: scale(1.01);
     }
     
-    /* Answer container with glassmorphism */
+    /* Enhanced answer container with theme support */
     .answer-container {
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(10px);
         padding: 2rem;
         border-radius: 1rem;
         box-shadow: 0 8px 32px rgba(0,0,0,0.1);
         margin-top: 2rem;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s ease;
         animation: fadeIn 0.5s ease-out;
+    }
+    
+    .answer-container.light {
+        background: var(--container-bg-light);
+        border: 1px solid var(--border-color-light);
+    }
+    
+    .answer-container.dark {
+        background: var(--container-bg-dark);
+        border: 1px solid var(--border-color-dark);
     }
     
     @keyframes fadeIn {
@@ -113,27 +160,40 @@ st.markdown("""
         to { opacity: 1; transform: translateY(0); }
     }
     
-    /* Answer box with gradient border */
+    /* Enhanced answer box with theme support */
     .answer-box {
-        background-color: #ffffff;
         padding: 1.5rem;
         border-radius: 0.5rem;
-        border: 2px solid transparent;
-        background-image: linear-gradient(white, white), 
-                         linear-gradient(90deg, #4CAF50, #2196F3);
-        background-origin: border-box;
-        background-clip: padding-box, border-box;
         margin-top: 1rem;
+        transition: all 0.3s ease;
     }
     
-    /* Source box with hover effect */
+    .answer-box.light {
+        background: #ffffff;
+        border: 2px solid #e0e0e0;
+    }
+    
+    .answer-box.dark {
+        background: #2d2d2d;
+        border: 2px solid #404040;
+    }
+    
+    /* Enhanced source box with theme support */
     .source-box {
-        background-color: #ffffff;
         padding: 1rem;
         border-radius: 0.5rem;
         margin-top: 0.5rem;
-        border: 1px solid #e0e0e0;
         transition: all 0.3s ease;
+    }
+    
+    .source-box.light {
+        background: #ffffff;
+        border: 1px solid #e0e0e0;
+    }
+    
+    .source-box.dark {
+        background: #2d2d2d;
+        border: 1px solid #404040;
     }
     
     .source-box:hover {
@@ -165,7 +225,7 @@ st.markdown("""
         transform: translateY(0);
     }
     
-    /* Chat message styling with animations */
+    /* Enhanced chat message styling with theme support */
     .chat-message {
         padding: 1rem;
         border-radius: 0.5rem;
@@ -176,19 +236,25 @@ st.markdown("""
         position: relative;
     }
     
+    .chat-message.light {
+        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    }
+    
+    .chat-message.dark {
+        background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+    }
+    
     @keyframes slideIn {
         from { opacity: 0; transform: translateX(-20px); }
         to { opacity: 1; transform: translateX(0); }
     }
     
     .chat-message.user {
-        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
         margin-left: 20%;
         border-left: 4px solid #2196F3;
     }
     
     .chat-message.assistant {
-        background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
         margin-right: 20%;
         border-left: 4px solid #4CAF50;
     }
@@ -203,18 +269,22 @@ st.markdown("""
         text-align: right;
     }
     
-    /* Sidebar styling */
-    .sidebar .sidebar-content {
-        background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
-        padding: 1rem;
-    }
-    
     /* Theme toggle button */
     .theme-toggle {
         position: fixed;
         bottom: 20px;
         right: 20px;
         z-index: 1000;
+        background: linear-gradient(90deg, #4CAF50, #2196F3);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .theme-toggle:hover {
+        transform: scale(1.05);
     }
     
     /* Loading animation */
@@ -232,12 +302,19 @@ st.markdown("""
         to { transform: rotate(360deg); }
     }
     
-    /* Footer styling */
+    /* Footer styling with theme support */
     .footer {
         text-align: center;
         padding: 2rem;
+        transition: all 0.3s ease;
+    }
+    
+    .footer.light {
         color: #666;
-        font-size: 0.9rem;
+    }
+    
+    .footer.dark {
+        color: #999;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -261,6 +338,10 @@ def initialize_components():
     
     return qa_system
 
+# Theme toggle function
+def toggle_theme():
+    st.session_state.theme = "dark" if st.session_state.theme == "light" else "light"
+
 # Sidebar
 with st.sidebar:
     st.markdown('<h1 class="header">☁️ Cloud Ops AI</h1>', unsafe_allow_html=True)
@@ -275,6 +356,7 @@ with st.sidebar:
     - Copy answers to clipboard
     - Chat history
     - Interactive UI
+    - Dark mode support
     """)
     st.markdown("---")
     st.markdown("### Documentation")
@@ -292,6 +374,11 @@ with st.sidebar:
 st.markdown('<h1 class="header">☁️ AI Cloud Ops Assistant</h1>', unsafe_allow_html=True)
 st.markdown("Ask questions about AWS, cloud operations, and best practices")
 
+# Theme toggle button
+if st.button("🌙 Toggle Theme", key="theme_toggle"):
+    toggle_theme()
+    st.rerun()
+
 # Initialize QA system
 try:
     qa_system = initialize_components()
@@ -305,13 +392,14 @@ except Exception as e:
 
 # Search Interface
 with st.container():
-    st.markdown('<div class="search-container">', unsafe_allow_html=True)
+    st.markdown(f'<div class="search-container {st.session_state.theme}">', unsafe_allow_html=True)
     col1, col2 = st.columns([4, 1])
     with col1:
         query = st.text_input(
             "Ask a cloud question",
             placeholder="e.g., 'How do I use AWS CLI?' or 'Explain EC2 instance types'",
-            label_visibility="collapsed"
+            label_visibility="collapsed",
+            key="query_input"
         )
     with col2:
         search_button = st.button("🔍 Search", use_container_width=True)
@@ -323,7 +411,7 @@ if st.session_state.chat_history:
     for message in st.session_state.chat_history:
         with st.container():
             st.markdown(f"""
-                <div class="chat-message {message['role']}">
+                <div class="chat-message {message['role']} {st.session_state.theme}">
                     <div class="content">{message['content']}</div>
                     <div class="timestamp">{message['timestamp']}</div>
                 </div>
@@ -351,11 +439,11 @@ if query and search_button:
             })
             
             # Display answer
-            st.markdown('<div class="answer-container">', unsafe_allow_html=True)
+            st.markdown(f'<div class="answer-container {st.session_state.theme}">', unsafe_allow_html=True)
             st.markdown("### 💡 Answer")
             answer_container = st.container()
             with answer_container:
-                st.markdown(f'<div class="answer-box">{result["answer"]}</div>', 
+                st.markdown(f'<div class="answer-box {st.session_state.theme}">{result["answer"]}</div>', 
                            unsafe_allow_html=True)
                 st.button("📋 Copy Answer", key="copy_answer")
             
@@ -364,7 +452,7 @@ if query and search_button:
                 st.markdown("### 📚 Sources")
                 for i, source in enumerate(result["sources"], 1):
                     with st.expander(f"Source {i}"):
-                        st.markdown(f'<div class="source-box">{source["content"]}</div>',
+                        st.markdown(f'<div class="source-box {st.session_state.theme}">{source["content"]}</div>',
                                   unsafe_allow_html=True)
                         if "metadata" in source:
                             st.caption(f"Source: {source['metadata'].get('source', 'Unknown')}")
@@ -377,8 +465,8 @@ if query and search_button:
             st.rerun()
 
 # Footer
-st.markdown("""
-    <div class="footer">
+st.markdown(f"""
+    <div class="footer {st.session_state.theme}">
         Built with ❤️ using Streamlit, LangChain, and OpenAI
     </div>
 """, unsafe_allow_html=True)
