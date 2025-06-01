@@ -7,7 +7,11 @@ from langchain.schema import Document
 class VectorStore:
     def __init__(self, openai_api_key: str):
         """Initialize the vector store with OpenAI embeddings."""
-        self.embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
+        self.embeddings = OpenAIEmbeddings(
+            openai_api_key=openai_api_key,
+            model="text-embedding-ada-002",
+            deployment="text-embedding-ada-002"
+        )
         self.vector_store = None
 
     def create_vector_store(self, documents: List[Document]) -> None:

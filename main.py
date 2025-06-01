@@ -8,6 +8,7 @@ from src.utils.qa_system import QASystem
 # Load environment variables
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+print(f"API Key loaded: {'Yes' if OPENAI_API_KEY else 'No'}")
 
 # UI Configuration
 st.set_page_config(
