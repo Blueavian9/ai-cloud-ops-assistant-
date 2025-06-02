@@ -1,15 +1,15 @@
-from typing import List
+from typing import List, Optional
 from pathlib import Path
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.vectorstores import FAISS
-from langchain.schema import Document
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.embeddings import OpenAIEmbeddings
+from langchain_community.vectorstores import FAISS
+from langchain_core.documents import Document
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 class VectorStore:
     def __init__(self, openai_api_key: str):
         """Initialize the vector store with OpenAI embeddings."""
         self.embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
-        self.vector_store = None
+        self.vector_store: Optional[FAISS] = None
         self.text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=1000,
             chunk_overlap=200,
